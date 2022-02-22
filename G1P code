@@ -1,0 +1,45 @@
+import numpy as np
+import pandas as pd
+import matplotlib
+%matplotlib inline
+import matplotlib.pyplot as plots
+plots.style.use('fivethirtyeight')
+import math as math
+
+
+#How News Appears on Social Media dataset, many different small ones
+news = pd.read_csv("news.csv").drop("Unnamed: 0", axis = "columns")
+news["Topic"] = "News"
+news
+
+politics = pd.read_csv("politics.csv").drop("Unnamed: 0", axis = "columns")
+politics["Topic"] = "Politics"
+politics
+
+sports = pd.read_csv("sports.csv").drop("Unnamed: 0", axis = "columns")
+sports["Topic"] = "Sports"
+sports 
+
+uplifting = pd.read_csv("uplifting_news.csv").drop("Unnamed: 0", axis = "columns")
+uplifting["Topic"] = "Uplifting"
+uplifting
+
+world_news = pd.read_csv("worldnews.csv").drop("Unnamed: 0", axis = "columns")
+world_news["Topic"] = "World News"
+world_news
+
+
+
+reddit = news.append([politics, sports, uplifting, world_news])
+reddit = reddit.reset_index().drop("index", axis = "columns")
+reddit
+
+
+
+score = reddit["Score"]
+comms = reddit["Number of Comments"] 
+
+colors={"News":"blue", "Politics":"red", "Sports":"orange", "Uplifting":"green", "World News":"yellow"}
+plots.scatter(score, comms, s=10, c=reddit["Topic"].map(colors))
+
+
